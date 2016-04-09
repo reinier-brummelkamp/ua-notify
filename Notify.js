@@ -145,14 +145,17 @@ var Notify = (function () {
 
                             resolve({
                                 element: element,
-                                data: e.detail.dialogData
+                                data: e.detail
                             });
                         })
                         element.addEventListener('dialog-reject', function (e) {
                             _appContainer.hideModalBackdrop();
                             _appContainer.setModalBackdropContents(null);
 
-                            reject(element);
+                            reject({
+                                element: element,
+                                data: e.detail
+                            });
                         })
                     }, function (error) {
                         console.error(error);
