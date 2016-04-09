@@ -129,38 +129,39 @@ var Notify = (function () {
                 return generateConfirmPromise(toastr.error(messageBody, title, overrideOptions));
             },
 
-            showModalDialog: function (elementName, initFunc) {
+            showModalDialog: function (options) {
+                var _th = this;
 
-                return new Promise(function (resolve, reject) {
-                    _elementFactory.createElement(elementName).then(function (element) {
+                _elementFactory.createElement(options.elementName).then(function (element) {
 
-                        initFunc(element);
+                    if (options.initFunc)
+                        options.initFunc(element);
 
-                        _appContainer.setModalBackdropContents(element);
-                        _appContainer.showModalBackdrop();
+                    _appContainer.setModalBackdropContents(element);
+                    _appContainer.showModalBackdrop();
 
-                        element.addEventListener('dialog-accept', function (e) {
-                            _appContainer.hideModalBackdrop();
-                            _appContainer.setModalBackdropContents(null);
+                    element.addEventListener('dialog-accept', function (e) {
+                        if (!options.preventCloseOnAccept)
+                            _th.hideModalDialog();
 
-                            resolve({
-                                element: element,
-                                data: e.detail
-                            });
-                        })
-                        element.addEventListener('dialog-reject', function (e) {
-                            _appContainer.hideModalBackdrop();
-                            _appContainer.setModalBackdropContents(null);
+                        if (options.acceptFunc)
+                            options.acceptFunc(element, e.detail);
+                    })
+                    element.addEventListener('dialog-reject', function (e) {
+                        if (!options.preventCloseOnReject)
+                            _th.hideModalDialog();
 
-                            reject({
-                                element: element,
-                                data: e.detail
-                            });
-                        })
-                    }, function (error) {
-                        console.error(error);
-                    });
+                        if (options.rejectFunc)
+                            options.rejectFunc(element, e.detail);
+                    })
+                }, function (error) {
+                    console.error(error);
                 });
+            },
+
+            hideModalDialog: function () {
+                _appContainer.hideModalBackdrop();
+                _appContainer.setModalBackdropContents(null);
             }
         };
     };
