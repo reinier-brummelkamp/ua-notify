@@ -141,18 +141,33 @@ var Notify = (function () {
                     _appContainer.showModalBackdrop();
 
                     element.addEventListener('dialog-accept', function (e) {
-                        if (!options.preventCloseOnAccept)
-                            _th.hideModalDialog();
+                        if (options.acceptFunc) {
+                            var shouldClose = options.acceptFunc(element, e.detail);
 
-                        if (options.acceptFunc)
-                            options.acceptFunc(element, e.detail);
+                            if (shouldClose === undefined) //nothing returned so assume true
+                                shouldClose = true;
+
+                            if (shouldClose && !options.preventCloseOnAccept)
+                                _th.hideModalDialog();
+                        }
+                        else {
+                            if (!options.preventCloseOnAccept)
+                                _th.hideModalDialog();
+                        }
                     })
                     element.addEventListener('dialog-reject', function (e) {
-                        if (!options.preventCloseOnReject)
-                            _th.hideModalDialog();
+                        if (options.rejectFunc) {
+                            var shouldClose = options.rejectFunc(element, e.detail);
 
-                        if (options.rejectFunc)
-                            options.rejectFunc(element, e.detail);
+                            if (shouldClose === undefined) //nothing returned so assume true
+                                shouldClose = true;
+
+                            if (shouldClose && !options.preventCloseOnReject)
+                                _th.hideModalDialog();
+                        } else {
+                            if (!options.preventCloseOnReject)
+                                _th.hideModalDialog();
+                        }
                     })
                 }, function (error) {
                     console.error(error);
