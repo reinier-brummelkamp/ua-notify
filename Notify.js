@@ -7,10 +7,10 @@ var Notify = (function () {
     // Instance stores a reference to the Singleton
     var notify_instance;
 
-    function notify_init(app) {
+    function notify_init(appContainer, elementFactory) {
         // Private variables
-        var _appContainer = app.AppContainer();
-        var _elementFactory = app.ElementFactory();
+        var _appContainer = appContainer;
+        var _elementFactory = elementFactory;
 
         var _defaultShowToasterOptions = {
             "closeButton": false,
@@ -185,9 +185,9 @@ var Notify = (function () {
 
         // Get the Singleton instance if one exists
         // or create one if it doesn't  
-        getInstance: function (app) {
+        getInstance: function (appContainer, elementFactory) {
             if (!notify_instance)
-                notify_instance = notify_init(app);
+                notify_instance = notify_init(appContainer, elementFactory);
 
             return notify_instance;
         }
