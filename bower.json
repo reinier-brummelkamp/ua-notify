@@ -1,6 +1,6 @@
 {
   "name": "ua-notify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "authors": [
     "Reinier Brummelkamp <reinier@urbanautomation.co.za>"
   ],
@@ -22,8 +22,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
-    "jquery": "^2.1.4",
-    "toastr": "^2.1.2"
+    "ua-imports": "~1.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
