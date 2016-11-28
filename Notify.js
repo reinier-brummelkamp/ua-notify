@@ -78,22 +78,22 @@ var Notify = (function () {
             // Public methods and variables
             showInfo: function (message, title, overrideOptions) {
                 toastr.options = _defaultShowToasterOptions;
-                toastr.info(message, title, overrideOptions);
+                return toastr.info(message, title, overrideOptions);
             },
 
             showWarning: function (message, title, overrideOptions) {
                 toastr.options = _defaultShowToasterOptions;
-                toastr.warning(message, title, overrideOptions);
+                return toastr.warning(message, title, overrideOptions);
             },
 
             showSuccess: function (message, title, overrideOptions) {
                 toastr.options = _defaultShowToasterOptions;
-                toastr.success(message, title, overrideOptions);
+                return toastr.success(message, title, overrideOptions);
             },
 
             showError: function (message, title, overrideOptions) {
                 toastr.options = _defaultShowToasterOptions;
-                toastr.error(message, title, overrideOptions);
+                return toastr.error(message, title, overrideOptions);
             },
 
 
